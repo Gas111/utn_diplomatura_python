@@ -14,16 +14,28 @@ from tkinter import ttk
 import modelo
 from mensajes import Vmensajes
 
+# for sockets
+from pathlib import Path
+import os
+import sys
+import threading
+import subprocess
+
 # #############################################
 # VISUAL
 # #############################################
-
+theproc=""
 
 class Vistaprincipal():
     
     def __init__(self,miventana):
         
         self.objcontr=modelo.Abmc()
+        
+        
+        #AGREGO RUTA A SERVIDOR
+        self.raiz = Path(__file__).resolve().parent
+        self.ruta_server = os.path.join(self.raiz, 'src', 'servidor', 'udp_server_t.py')
         
         self.ventana= miventana
         self.ventana.title("Incoming Material - UTN Python")
@@ -88,13 +100,13 @@ class Vistaprincipal():
         self.tree.heading("col4", text="Descripcion")
         self.tree.grid(row=10, column=0,columnspan=4,sticky=W+E)
         
-        
+       
         self.bi=Button(self.ventana,text= "Insertar",command=lambda:self.objcontr._insertar(self.id_var  ,self.nroparte_var  ,self.cantidad_var  ,self.lote_var  ,self.descripcion_var,self.tree)).grid(row=5,column=0)
         self.bb=Button(self.ventana,text= "Borrar",command=lambda:self.objcontr._borrar(self.id_var,self.nroparte_var  ,self.cantidad_var  ,self.lote_var  ,self.descripcion_var,self.tree)).grid(row=5,column=1)
         self.bm=Button(self.ventana,text= "Modificar",command=lambda:self.objcontr._modificar(self.id_var,self.nroparte_var,self.cantidad_var,self.lote_var,self.descripcion_var,self.tree)).grid(row=5,column=2)
         self.bs=Button(self.ventana,text= "Seleccionar",command=lambda:self.objcontr._seleccionar(self.id_var,self.nroparte_var,self.cantidad_var,self.lote_var,self.descripcion_var,self.tree)).grid(row=5,column=3)
         self.bvd=Button(self.ventana,text= "Ver DB",command=lambda:self.objcontr._ver_db(self.tree)).grid(row=4,column=3)
-        # self.bbd=Button(self.ventana,text= "DB Aceptar",command=lambda:self.objcontr._ver_db(self.tree)).grid(row=4,column=2)
+        self.sock=Button(self.ventana,text= "Socket",command=lambda:self.try_connection()).grid(row=4,column=2)
         return
     
     def valorcombobox(self,):
@@ -114,3 +126,35 @@ class Vistaprincipal():
         except ValueError:
             print("error")
             # Vmensajes.mensajeerrordb(1)
+
+    # def prender(self,):
+    #     print("prender")
+
+    def try_connection(self, ): 
+
+        if theproc != "":
+            theproc.kill()
+            threading.Thread(target=self.lanzar_servidor, args=(True,), daemon=True).start()
+        else:
+            threading.Thread(target=self.lanzar_servidor, args=(True,), daemon=True).start()
+        
+    def lanzar_servidor(self, var):
+
+        the_path =  self.ruta_server
+        if var==True:
+            global theproc
+            theproc = subprocess.Popen([sys.executable, the_path])
+            theproc.communicate()
+        else:
+            print("")
+
+    # =================== INNIT AND STOP SERVER ====================== 
+    def stop_server():
+        print("Stop Server petition")
+        try:
+            global theproc
+            if theproc !="":
+                print("Closing Server and thread")
+                theproc.kill() 
+        except:
+            print("error")

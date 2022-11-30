@@ -8,3 +8,7 @@
 <modelo.Abmc object at 0x000001CD481B3B20> Insert fdgs 435 dfsa dfdsf 
 <modelo.Abmc object at 0x000001CD481B3B20> Insert fdgs 55555555 dfsa dfdsf 
 <modelo.Abmc object at 0x000001CD481B3B20> Insert     
+<modelo.Abmc object at 0x000002141F3FA710> Update     
+<modelo.Abmc object at 0x000002141F3FA710> Delete dsaf 23443 sdaf dasf 
+<modelo.Abmc object at 0x000002141F3FA710> Delete     
+<modelo.Abmc object at 0x000002141F3FA710> Insert fdfas 45 fds dafsfda 

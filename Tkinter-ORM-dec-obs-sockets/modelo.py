@@ -127,10 +127,10 @@ class Abmc(Database, Sujeto):
         self.actualizar_treeview(tree)
 
         try:
-            self.datos_log("Insert", nroparte_var.get(
+            self.datos_log("Delete", nroparte_var.get(
             ), cantidad_var.get(), lote_var.get(), descripcion_var.get())
             # observador
-            self.notificar("ClassAbmc Method insertar- params", nroparte_var.get(),
+            self.notificar("ClassAbmc Method delete- params", nroparte_var.get(),
                            cantidad_var.get(), lote_var.get(), descripcion_var.get())
         except:
             print("error log and observador")
@@ -148,10 +148,10 @@ class Abmc(Database, Sujeto):
         ).where(Stock.id == valor_id["text"])
 
         try:
-            self.datos_log("Insert", nroparte_var.get(
+            self.datos_log("Update", nroparte_var.get(
             ), cantidad_var.get(), lote_var.get(), descripcion_var.get())
             # observador
-            self.notificar("ClassAbmc Method insertar- params", nroparte_var.get(),
+            self.notificar("ClassAbmc Method Update- params", nroparte_var.get(),
                            cantidad_var.get(), lote_var.get(), descripcion_var.get())
         except:
             print("error log and observador")
@@ -205,7 +205,7 @@ class Abmc(Database, Sujeto):
             self.datos_log("Insert", nroparte_var.get(
             ), cantidad_var.get(), lote_var.get(), descripcion_var.get())
             # observador
-            self.notificar("ClassAbmc Method insertar- params", nroparte_var.get(),
+            self.notificar("ClassAbmc Method insert- params", nroparte_var.get(),
                            cantidad_var.get(), lote_var.get(), descripcion_var.get())
         except:
             print("error log and observador")
